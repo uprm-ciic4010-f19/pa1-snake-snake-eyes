@@ -1,5 +1,6 @@
 package Worlds;
 
+import java.awt.Color;
 import Game.Entities.Dynamic.Player;
 import Game.Entities.Dynamic.Tail;
 import Game.Entities.Static.Apple;
@@ -53,9 +54,9 @@ public abstract class WorldBase {
 
     public void render(Graphics g){
 
-        for (int i = 0; i <= 800; i = i + GridPixelsize) {
+        for (int i = 0; i <= 3600; i = i + GridPixelsize) {
 
-            g.setColor(Color.white);
+            g.setColor(new Color(128,0,128));
             g.drawLine(0, i, handler.getWidth() , i);
             g.drawLine(i,0,i,handler.getHeight());
 
