@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.Random;
 import Game.GameStates.State;
+import java.lang.Math;
 
 
 
@@ -22,6 +23,8 @@ public class Player {
     public int yCoord;
     public int playerSpeed;
     public int moveCounter;
+    public double score;
+    public int studentid;
 
     public String direction;//is your first name one?
 
@@ -33,7 +36,9 @@ public class Player {
         direction= "Right";
         justAte = false;
         lenght= 1;
-        playerSpeed= 3;
+        playerSpeed= 5;
+        score=0;
+        studentid = 4;
     }
 
     public void tick(){
@@ -122,7 +127,10 @@ public class Player {
     }
 
     public void render(Graphics g,Boolean[][] playeLocation){
-        Random r = new Random();
+    	g.setColor(Color.white);
+    	g.setFont(new Font("Times New Roman", 1, 20));
+    	g.drawString("Score: "+String.valueOf(score), 0, 15);
+    	Random r = new Random();
         for (int i = 0; i < handler.getWorld().GridWidthHeightPixelCount; i++) {
             for (int j = 0; j < handler.getWorld().GridWidthHeightPixelCount; j++) {
                 g.setColor(Color.green);
@@ -142,6 +150,9 @@ public class Player {
 
     public void Eat(){
         lenght++;
+        score++;
+        score = Math.sqrt(2*score+1);
+        playerSpeed = playerSpeed - studentid + 1 ;
         Tail tail= null;
         handler.getWorld().appleLocation[xCoord][yCoord]=false;
         handler.getWorld().appleOnBoard=false;
