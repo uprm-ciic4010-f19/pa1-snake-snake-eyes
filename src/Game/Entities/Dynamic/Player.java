@@ -73,7 +73,7 @@ public class Player {
 
 		}
 		if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) {
-			State.setState(handler.getGame().pauseState);
+			State.setState(handler.getGame().gameOverState);
 		}
     }
 
