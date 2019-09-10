@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import java.util.Random;
 import Game.GameStates.State;
 import java.lang.Math;
+import Game.Entities.Dynamic.Tail;
 
 
 
@@ -25,6 +26,8 @@ public class Player {
     public int moveCounter;
     public double score;
     public int studentid;
+    public int a;
+    public int tail_xcoord,tail_ycoord;
 
     public String direction;//is your first name one?
 
@@ -42,6 +45,18 @@ public class Player {
     }
 
     public void tick(){
+    	
+    	for(Tail tail : handler.getWorld().body) {
+
+    		tail_xcoord = tail.x;
+    		tail_ycoord = tail.y;
+
+    		if((tail_xcoord == handler.getWorld().player.xCoord) && tail_ycoord == handler.getWorld().player.yCoord)  {
+    			
+    			kill();
+    			State.setState(handler.getGame().gameOverState);
+    		}
+    	}
         moveCounter++;
         if (moveCounter >= playerSpeed) {
 
@@ -73,7 +88,7 @@ public class Player {
 
 		}
 		if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) {
-			State.setState(handler.getGame().gameOverState);
+			State.setState(handler.getGame().pauseState);
 		}
     }
 
@@ -112,8 +127,7 @@ public class Player {
                 break;
         }
         handler.getWorld().playerLocation[xCoord][yCoord]=true;
-
-
+        
         if(handler.getWorld().appleLocation[xCoord][yCoord]){
             Eat();
         }
@@ -265,6 +279,7 @@ public class Player {
             for (int j = 0; j < handler.getWorld().GridWidthHeightPixelCount; j++) {
 
                 handler.getWorld().playerLocation[i][j]=false;
+                State.setState(handler.getGame().gameOverState);
 
             }
         }

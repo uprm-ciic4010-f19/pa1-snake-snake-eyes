@@ -1,5 +1,6 @@
 package Game.GameStates;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 
@@ -52,12 +53,11 @@ public class GameOverState extends State {
 	@Override
 	public void render(Graphics g) {
 		
-
-		g.fillRect(0, 0, 800, 800);
-	
+		g.setColor(Color.white);
+		
 		g.setFont(new Font("Impact", Font.BOLD, 100));
 
-		g.drawString("GAME OVER", 300, 300);
+		g.drawString("GAME OVER", 180, 300);
 
 		uiManager.Render(g);
 
