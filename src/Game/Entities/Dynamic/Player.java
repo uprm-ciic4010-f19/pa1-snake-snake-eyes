@@ -28,6 +28,7 @@ public class Player {
     public int studentid;
     public int a;
     public int tail_xcoord,tail_ycoord;
+    public int steps;
 
     public String direction;//is your first name one?
 
@@ -55,6 +56,7 @@ public class Player {
     			
     			kill();
     			State.setState(handler.getGame().gameOverState);
+    		steps++;
     		}
     	}
         moveCounter++;
@@ -129,7 +131,24 @@ public class Player {
         handler.getWorld().playerLocation[xCoord][yCoord]=true;
         
         if(handler.getWorld().appleLocation[xCoord][yCoord]){
-            Eat();
+        	Eat();
+        	if(handler.getWorld().apple.goodapple()==false) {
+        		steps = 0;
+        		score = Math.sqrt(2*score-1);//decreased score when apple is bad
+        		if(score<0) {
+        			score=0;
+        		}
+        		else {
+        			if(handler.getWorld().apple.goodapple()==true) {
+        				score+=Math.sqrt(2*score+1);
+        				playerSpeed-=.5;
+        				playerSpeed-=1;
+        	}
+        }
+        
+
+        	}
+        		
         }
 
         if(!handler.getWorld().body.isEmpty()) {
@@ -141,14 +160,12 @@ public class Player {
     }
 
     public void render(Graphics g,Boolean[][] playeLocation){
-    	g.setColor(Color.white);
+    	g.setColor(Color.green);
     	g.setFont(new Font("Times New Roman", 1, 20));
     	g.drawString("Score: "+String.valueOf(score), 0, 15);
     	Random r = new Random();
         for (int i = 0; i < handler.getWorld().GridWidthHeightPixelCount; i++) {
             for (int j = 0; j < handler.getWorld().GridWidthHeightPixelCount; j++) {
-                g.setColor(Color.green);
-
                 if(playeLocation[i][j]||handler.getWorld().appleLocation[i][j]){
                     g.fillRect((i*handler.getWorld().GridPixelsize),
                             (j*handler.getWorld().GridPixelsize),
@@ -166,7 +183,7 @@ public class Player {
         lenght++;
         score++;
         score = Math.sqrt(2*score+1);
-        playerSpeed = playerSpeed - studentid + 1 ;
+        playerSpeed = playerSpeed - studentid + 1;
         Tail tail= null;
         handler.getWorld().appleLocation[xCoord][yCoord]=false;
         handler.getWorld().appleOnBoard=false;
@@ -268,9 +285,12 @@ public class Player {
 
                 }
                 break;
+                
         }
         handler.getWorld().body.addLast(tail);
         handler.getWorld().playerLocation[tail.x][tail.y] = true;
+        System.out.println(moveCounter);
+        
     }
 
     public void kill(){
@@ -377,7 +397,7 @@ public class Player {
                         tail=(new Tail(this.xCoord-1,this.yCoord,handler));
                     }else{
                         tail=(new Tail(this.xCoord+1,this.yCoord,handler));
-                    } System.out.println("Tu biscochito");
+                    }
                 }
             }else{
                 if(handler.getWorld().body.getLast().y!=0){
