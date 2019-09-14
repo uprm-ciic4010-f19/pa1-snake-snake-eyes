@@ -29,6 +29,7 @@ public class Player {
     public int a;
     public int tail_xcoord,tail_ycoord;
     public int steps;
+    public Tail space;
 
     public String direction;//is your first name one?
 
@@ -133,13 +134,15 @@ public class Player {
         if(handler.getWorld().appleLocation[xCoord][yCoord]){
         	Eat();
         	if(handler.getWorld().apple.goodapple()==false) {
-        		steps = 0;
+        		removeTail();
+        		moveCounter=0;
         		score = Math.sqrt(2*score-1);//decreased score when apple is bad
         		if(score<0) {
         			score=0;
         		}
         		else {
         			if(handler.getWorld().apple.goodapple()==true) {
+        				moveCounter = 0;
         				score+=Math.sqrt(2*score+1);
         				playerSpeed-=.5;
         				playerSpeed-=1;
@@ -160,24 +163,44 @@ public class Player {
     }
 
     public void render(Graphics g,Boolean[][] playeLocation){
-    	g.setColor(Color.green);
+    	g.setColor(Color.white);
     	g.setFont(new Font("Times New Roman", 1, 20));
     	g.drawString("Score: "+String.valueOf(score), 0, 15);
     	Random r = new Random();
         for (int i = 0; i < handler.getWorld().GridWidthHeightPixelCount; i++) {
             for (int j = 0; j < handler.getWorld().GridWidthHeightPixelCount; j++) {
-                if(playeLocation[i][j]||handler.getWorld().appleLocation[i][j]){
+                if(playeLocation[i][j]){
+                	g.setColor(Color.green);
                     g.fillRect((i*handler.getWorld().GridPixelsize),
                             (j*handler.getWorld().GridPixelsize),
                             handler.getWorld().GridPixelsize,
                             handler.getWorld().GridPixelsize);
                 }
+                if(handler.getWorld().appleLocation[i][j]) { 
+                	if(handler.getWorld().apple.goodapple()) {
+                		g.setColor(Color.green);
+                		g.fillRect((i*handler.getWorld().GridPixelsize),
+                    			(j*handler.getWorld().GridPixelsize),
+                    			handler.getWorld().GridPixelsize,
+                    			handler.getWorld().GridPixelsize);
+                	}
+                	else {
+                		g.setColor(Color.blue);
+                		g.fillRect((i*handler.getWorld().GridPixelsize),
+                    			(j*handler.getWorld().GridPixelsize),
+                    			handler.getWorld().GridPixelsize,
+                    			handler.getWorld().GridPixelsize);
+                }
+                	
+                }
+            }
+                
 
             }
         }
 
 
-    }
+    
 
     public void Eat(){
         lenght++;
@@ -414,5 +437,9 @@ public class Player {
             break;
     }
     handler.getWorld().body.addLast(tail);
+    }
+    public void removeTail() {
+    	space = handler.getWorld().body.pop();
+    	space.minusTail = true;
     }
 }
