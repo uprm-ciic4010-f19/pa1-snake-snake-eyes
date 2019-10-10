@@ -17,6 +17,24 @@ public class Apple {
         this.xCoord=x;
         this.yCoord=y;
     }
+    
+    public boolean goodapple(){
+    	
+    	if(handler.getWorld().player.moveCounter>=5) {
+    		
+    		return false;
+    	
+    	}
+    	else {
+    		
+    		return true;
+    	}
+    	
+    }
+    public void rottenapple() {
+    	
+    	
+    }
 
 
 }

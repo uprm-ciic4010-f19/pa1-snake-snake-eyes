@@ -1,6 +1,5 @@
 package Worlds;
 
-import java.awt.Color;
 import Game.Entities.Dynamic.Player;
 import Game.Entities.Dynamic.Tail;
 import Game.Entities.Static.Apple;
@@ -19,6 +18,7 @@ public abstract class WorldBase {
     //How many pixels are from top to bottom
     //Must be equal
     public int GridWidthHeightPixelCount;
+    public int currScore;
 
     //automatically calculated, depends on previous input.
     //The size of each box, the size of each box will be GridPixelsize x GridPixelsize.
@@ -30,7 +30,7 @@ public abstract class WorldBase {
 
 
     public Boolean appleOnBoard;
-    protected Apple apple;
+    public Apple apple;
     public Boolean[][] appleLocation;
 
 
@@ -61,9 +61,15 @@ public abstract class WorldBase {
             g.drawLine(i,0,i,handler.getHeight());
 
         }
+        
 
 
 
+    }
+    public void score(Graphics g) {  
+    	g.setColor(Color.white);
+    	g.setFont(new Font("aerial",Font.PLAIN,40));
+    	g.drawString("Score: "+currScore, 800, 800);
     }
 
 }
