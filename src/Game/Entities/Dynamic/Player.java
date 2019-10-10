@@ -136,7 +136,7 @@ public class Player {
         	if(handler.getWorld().apple.goodapple()==false) {
         		removeTail();
         		moveCounter=0;
-        		score = Math.sqrt(2*score-1);//decreased score when apple is bad
+        		score = Math.sqrt(2*score-1); //decreased score when apple is bad
         		if(score<0) {
         			score=0;
         		}
